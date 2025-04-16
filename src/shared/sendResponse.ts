@@ -6,7 +6,7 @@ export const sendResponse = (
     statusCode: number;
     success: boolean;
     message: string;
-    data: any;
+    data?: any;
   }
 ) => {
   const { statusCode, success, message, data } = jsonData;
