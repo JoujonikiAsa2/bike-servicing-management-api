@@ -9,6 +9,22 @@ const createCustomer = async (payload: Customer) => {
   return result;
 };
 
+const getAllCustomers = async () => {
+  const result = await prisma.customer.findMany();
+  return result;
+};
+
+const getCustomerById = async (id: string) => {
+  const result = await prisma.customer.findUnique({
+    where: {
+      customerId: id,
+    },
+  });
+  return result;
+};
+
 export const CustomerService = {
   createCustomer,
+  getAllCustomers,
+  getCustomerById,
 };

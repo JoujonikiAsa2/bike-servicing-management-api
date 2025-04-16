@@ -14,6 +14,29 @@ const createCustomer = asyncWrapper(async (req, res) => {
     });
 });
 
+const getAllCustomers = asyncWrapper(async (req, res) => {
+    const result = await CustomerService.getAllCustomers();
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Customers fetched successfully",
+      data: result,
+    });
+});
+
+const getCustomerById = asyncWrapper(async (req, res) => {
+    const { id } = req.params;
+    const result = await CustomerService.getCustomerById(id);
+    sendResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: "Customer fetched successfully",
+      data: result,
+    });
+});
+
 export const CustomerController = {
   createCustomer,
+  getAllCustomers,
+  getCustomerById
 };
