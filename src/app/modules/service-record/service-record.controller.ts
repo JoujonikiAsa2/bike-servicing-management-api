@@ -36,6 +36,16 @@ const getServiceRecordById = asyncWrapper(async (req, res) => {
 });
 
 
+const getPendingServiceRecords = asyncWrapper(async (req, res) => {
+  const result = await ServiceRecordService.getPendingServiceRecords();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Overdue or pending services fetched successfully",
+    data: result,
+  });
+});
+
 const markAsComplete = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const result = await ServiceRecordService.markAsComplete(id);
@@ -52,4 +62,5 @@ export const ServiceRecordController = {
   getAllServiceRecords,
   getServiceRecordById,
   markAsComplete,
+  getPendingServiceRecords
 };

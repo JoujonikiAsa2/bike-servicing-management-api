@@ -18,7 +18,7 @@ const getAllServiceRecords = async () => {
 const getServiceRecordById = async (id: string) => {
   const result = await prisma.serviceRecord.findUnique({
     where: {
-      serviceId: id ,
+      serviceId: id,
     },
   });
   return result;
@@ -27,11 +27,27 @@ const getServiceRecordById = async (id: string) => {
 const markAsComplete = async (id: string) => {
   const result = await prisma.serviceRecord.update({
     where: {
-      serviceId: id ,
+      serviceId: id,
     },
     data: {
       completionDate: new Date(),
       status: ServiceStatus.done,
+    },
+  });
+  return result;
+};
+
+const getPendingServiceRecords = async () => {
+  const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const result = await prisma.serviceRecord.findMany({
+    where: {
+      status: {
+        in: [ServiceStatus.pending, ServiceStatus.in_progress],
+      },
+      serviceDate: {
+        lt: sevenDaysAgo,
+      },
     },
   });
   return result;
@@ -42,4 +58,5 @@ export const ServiceRecordService = {
   getAllServiceRecords,
   getServiceRecordById,
   markAsComplete,
+  getPendingServiceRecords,
 };
