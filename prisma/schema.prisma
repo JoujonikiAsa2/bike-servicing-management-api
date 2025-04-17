@@ -15,7 +15,7 @@ model Customer {
   phone      String
   createdAt  DateTime @default(now())
 
-  bike Bike?
+  bike Bike[]
 
   @@map("customers")
 }
@@ -25,30 +25,30 @@ model Bike {
   brand      String
   model      String
   year       Int
-  customerId String   @unique
+  customerId String 
   customer   Customer @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
   createdAt  DateTime @default(now())
 
-  ServiceRecord ServiceRecord?
+  ServiceRecord ServiceRecord[]
 
   @@map("bikes")
 }
 
 model ServiceRecord {
   serviceId      String        @id @default(uuid())
-  bikeId         String @unique
+  bikeId         String 
   serviceDate    DateTime
   completionDate DateTime?
   description    String
   status         ServiceStatus
 
-  bike Bike @relation(fields: [bikeId], references: [bikeId])
+  bike Bike @relation(fields: [bikeId], references: [bikeId], onDelete: Cascade)
 
   @@map("service_records")
 }
 
 enum ServiceStatus {
-  PENDING
-  IN_PROGRESS
-  DONE
+  pending
+   in_progress @map("in-progress")
+  done
 }
