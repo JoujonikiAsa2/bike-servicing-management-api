@@ -25,7 +25,7 @@ model Bike {
   brand      String
   model      String
   year       Int
-  customerId String 
+  customerId String
   customer   Customer @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
   createdAt  DateTime @default(now())
 
@@ -36,7 +36,7 @@ model Bike {
 
 model ServiceRecord {
   serviceId      String        @id @default(uuid())
-  bikeId         String 
+  bikeId         String
   serviceDate    DateTime
   completionDate DateTime?
   description    String
@@ -48,7 +48,7 @@ model ServiceRecord {
 }
 
 enum ServiceStatus {
-  pending
-   in_progress @map("in-progress")
-  done
+  pending     @map("pending")
+  in_progress @map("in-progress")
+  done        @map("done")
 }

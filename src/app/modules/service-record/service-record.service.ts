@@ -4,7 +4,7 @@ import { IServiceRecord } from "./service-record.interface";
 
 const addServiceRecord = async (payload: IServiceRecord) => {
   const result = await prisma.serviceRecord.create({
-    data: { ...payload, status: ServiceStatus.in_progress },
+    data: { ...payload, status: payload.status as ServiceStatus },
   });
 
   return result;
@@ -24,8 +24,22 @@ const getServiceRecordById = async (id: string) => {
   return result;
 };
 
+const markAsComplete = async (id: string) => {
+  const result = await prisma.serviceRecord.update({
+    where: {
+      serviceId: id ,
+    },
+    data: {
+      completionDate: new Date(),
+      status: ServiceStatus.done,
+    },
+  });
+  return result;
+};
+
 export const ServiceRecordService = {
   addServiceRecord,
   getAllServiceRecords,
   getServiceRecordById,
+  markAsComplete,
 };

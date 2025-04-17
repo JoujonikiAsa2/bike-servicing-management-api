@@ -35,15 +35,24 @@ const updateCustomer = async (payload: Partial<Customer>, id: string) => {
 
 const deleteCustomer = async (id: string) => {
   const result = await prisma.$transaction(async (transactionClient) => {
-    const deletedBike = await transactionClient.bike.delete({
+    const bike = await transactionClient.bike.findFirst({
       where: {
         customerId: id,
       },
     });
 
+    if (bike) {
+      await transactionClient.bike.delete({
+        where: {
+          bikeId: bike.bikeId,
+        },
+      });
+    }
+
+
     await transactionClient.customer.delete({
       where: {
-        customerId: deletedBike.customerId,
+        customerId: id,
       },
     });
   });
