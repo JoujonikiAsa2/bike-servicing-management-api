@@ -27,7 +27,6 @@ model Bike {
   year       Int
   customerId String
   customer   Customer @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
-  createdAt  DateTime @default(now())
 
   ServiceRecord ServiceRecord[]
 
