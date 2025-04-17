@@ -31,29 +31,9 @@ const getBikeById = async (id: string) => {
   return result;
 };
 
-const updateBike = async (payload: Partial<IBike>, id: string) => {
-  const result = await prisma.bike.update({
-    where: {
-      bikeId: id,
-    },
-    data: {},
-  });
-  return result;
-};
-
-const deleteBike = async (id: string) => {
-  const result = await prisma.bike.delete({
-    where: {
-      bikeId: id,
-    },
-  });
-  return result;
-};
 
 export const BikeService = {
   addBike,
   getAllBikes,
   getBikeById,
-  updateBike,
-  deleteBike,
 };
