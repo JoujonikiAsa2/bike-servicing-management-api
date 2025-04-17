@@ -5,7 +5,7 @@ export const asyncWrapper = (fn: RequestHandler) => {
     try {
       await fn(req, res, next);
     } catch (err) {
-      throw err;
+      next(err);
     }
   };
 };
