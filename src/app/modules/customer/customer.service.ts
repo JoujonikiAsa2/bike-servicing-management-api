@@ -34,18 +34,26 @@ const updateCustomer = async (payload: Partial<Customer>, id: string) => {
 };
 
 const deleteCustomer = async (id: string) => {
-    const result = await prisma.customer.delete({
+  const result = await prisma.$transaction(async (transactionClient) => {
+    const deletedBike = await transactionClient.bike.delete({
       where: {
         customerId: id,
-      }
+      },
     });
-    return result;
-  };
+
+    await transactionClient.customer.delete({
+      where: {
+        customerId: deletedBike.customerId,
+      },
+    });
+  });
+  return result;
+};
 
 export const CustomerService = {
   createCustomer,
   getAllCustomers,
   getCustomerById,
   updateCustomer,
-  deleteCustomer
+  deleteCustomer,
 };

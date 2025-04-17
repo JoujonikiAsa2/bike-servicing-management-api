@@ -48,7 +48,7 @@ const updateCustomer = asyncWrapper(async (req, res) => {
 
 const deleteCustomer = asyncWrapper(async (req, res) => {
     const { id } = req.params;
-    const result = await CustomerService.deleteCustomer(id);
+    await CustomerService.deleteCustomer(id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

@@ -26,7 +26,7 @@ model Bike {
   model      String
   year       Int
   customerId String   @unique
-  customer   Customer @relation(fields: [customerId], references: [customerId])
+  customer   Customer @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
   createdAt  DateTime @default(now())
 
   ServiceRecord ServiceRecord?
